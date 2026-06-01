@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog (Next.js + Prisma)
 
-## Getting Started
+Short description
+-----------------
 
-First, run the development server:
+A small Next.js (App Router) blog starter using TypeScript, TailwindCSS, Clerk auth, and Prisma (v7). It includes runtime adapter selection for Prisma so the app can run with Neon or a standard Postgres provider.
+
+Table of contents
+-----------------
+
+- Features
+- Tech stack
+- Quick start
+- Environment variables
+- Prisma adapter (Neon vs Postgres)
+- Development & build
+- Deployment
+- Credits
+
+Features
+--------
+
+- App Router (Next.js)
+- TypeScript
+- TailwindCSS + shadcn components
+- Prisma ORM (v7) with runtime adapter selection
+- Clerk authentication (Sign in / Sign out components)
+
+Tech stack
+----------
+
+- Next.js 14 (app router)
+- React 18
+- TypeScript 5+
+- Tailwind CSS
+- Prisma 7
+- PostgreSQL / Neon
+
+Quick start
+-----------
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env` file (see Environment variables section).
+
+3. Generate Prisma client and push schema:
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+4. Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Environment variables
+---------------------
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env` in the project root with at least:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DATABASE_URL="postgresql://username:password@host:5432/dbname"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+CLERK_SECRET_KEY=...
+```
 
-## Learn More
+Prisma Adapter (Neon vs Postgres)
+--------------------------------
 
-To learn more about Next.js, take a look at the following resources:
+This project supports both the Postgres and Neon adapters for Prisma and chooses the adapter at runtime.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- How adapter selection works:
+  - Set `PRISMA_ADAPTER=neon` to force Neon.
+  - Set `PRISMA_ADAPTER=pg` to force Postgres.
+  - If `PRISMA_ADAPTER` is not set, the code auto-detects Neon when the `DATABASE_URL` contains `neon` or `neondatabase`; otherwise it uses Postgres.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Example env:
 
-## Deploy on Vercel
+```bash
+DATABASE_URL="postgresql://..."  # or a Neon URL
+# Optional: PRISMA_ADAPTER=neon
+# Optional: PRISMA_ADAPTER=pg
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Common Prisma commands:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx prisma generate
+npx prisma db push   # or `prisma migrate` if you prefer migrations
+```
+
+Development & build
+-------------------
+
+- Start dev server:
+
+```bash
+npm run dev
+```
+
+- Build for production:
+
+```bash
+npm run build
+npm run start
+```
+
+Deployment
+----------
+
+
+
+Credits
+-------
+
+
+
